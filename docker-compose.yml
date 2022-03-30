@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+
+  db:
+    image: wangxian/alpine-mysql:latest
+    container_name: mysql8022
+    environment:
+      MYSQL_ROOT_USERNAME: root
+      MYSQL_ROOT_PASSWORD: springboot
+    ports:
+      - "3306:3306"
+
+  redis:
+    image: redis:5.0.14-alpine
+    container_name: redis6379
+    ports:
+      - "6379:6379"
+
+  web:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: rbac
+    depends_on:
+      - db
+      - redis
+    ports:
+      - "8080:8080"
+    deploy:
+      resources:
+          limits:
+            cpus: 0.75
+          reservations:
+            cpus: 0.25
+            memory: 256M
+    restart: always
+
+
+

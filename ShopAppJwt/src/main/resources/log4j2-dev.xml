@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <properties>
+        <!--日誌輸出位置-->
+        <property name="LOG_HOME">./logs</property>
+    </properties>
+
+    <Appenders>
+        <!-- 將日誌輸出到控制台-->
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <!--設置日誌格式及顏色-->
+            <PatternLayout pattern="[%style{%d}{bright,green}][%highlight{%p}][%style{%t}{bright,blue}]: %msg%n%style{%throwable}{red}"
+                           disableAnsi="false" noConsoleNoAnsi="false"/>
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" />
+            <!--用ThresholdFilter過濾 INFO 以上級別才顯示在terminal上~-->
+
+        </Console>
+
+         將日誌輸出到本地位置生成資料夾及文件
+        <RollingFile name="FILE-APPENDER"
+                     fileName="./logs/log4j2.log"
+                     filePattern="./logs/log4j2-%d{yyyy-MM-dd HH}-%i.log">
+            <!--設置日誌格式-->
+            <PatternLayout>
+                <pattern>[%d][%p][%t] %m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <!-- 設置日誌文件切分大小參數 -->
+                <SizeBasedTriggeringPolicy size="10MB"/>
+                <TimeBasedTriggeringPolicy />
+<!--                TimeBasedTriggeringPolicy默認的size是1，結合filePattern定義%d{yyyy-MM-dd}，則每天生成一個文件（最小的時間切分粒度是小時）-->
+            </Policies>
+            <!--設置最大存檔數量 (暫存時會出現第四個)-->
+            <DefaultRolloverStrategy max="3"/>
+
+<!--&lt;!&ndash;            每天早上五點進行檢查刪除 默認每天生成7個文件&ndash;&gt;-->
+<!--            <CronTriggeringPolicy schedule="0 0 5 * * ? "/>-->
+<!--            <DefaultRolloverStrategy>-->
+<!--                <Delete basePath="${LOG_HOME}" maxDepth="1">-->
+<!--&lt;!&ndash;                    maxDepth指定了目錄掃描深度，為2表示掃描 ./logs 文件夾及其子文件夾&ndash;&gt;-->
+<!--                    <IfFileName glob="log4j2*.log"/>-->
+<!--&lt;!&ndash;                    刪除15天前的文件&ndash;&gt;-->
+<!--                    <IfLastModified age="15d"/>-->
+<!--                </Delete>-->
+<!--            </DefaultRolloverStrategy>-->
+
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+
+        <!--針對 ShopAppJwt.controller.member.UserControllerAsynTest 的日誌採用異步日誌 (異步同步混合使用)-->
+<!--        <AsyncLogger name="ShopAppJwt.controller.member.UserControllerAsynTest" level="info" additivity="false">-->
+<!--            <AppenderRef ref="CONSOLE" level="info"/>-->
+<!--            <AppenderRef ref="FILE-APPENDER" level="info"/>-->
+<!--        </AsyncLogger>-->
+
+        <!-- 全局設定日誌設置 -->
+        <Root level="info">
+            <AppenderRef ref="CONSOLE" level="info"/>
+            <AppenderRef ref="FILE-APPENDER" level="info"/>
+        </Root>
+
+        <!--spring日誌-->
+        <Logger name="org.springframework" level="info"/>
+
+        <!--atomikos日誌-->
+<!--        <Logger name="com.atomikos" level="error">-->
+<!--            <AppenderRef ref="CONSOLE" />-->
+<!--        </Logger>-->
+
+    </Loggers>
+</configuration>
