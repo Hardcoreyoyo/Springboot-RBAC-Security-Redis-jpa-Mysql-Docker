@@ -104,6 +104,8 @@ AllStart.sh
 | JWT 查詢效率低落 | 改為 JWT 授權等於每次 request 都要去資料庫做查詢，<br>加上是多讀少寫的情境適合加 cache 優化查詢，用 Redis 實現 。<br>~~或是把所有權限資訊及可訪問的api全部存入 token，<br>這樣後續就不用每次都去數據庫查。但 token 大小有疑慮。~~ |
 | 緩存穿透問題 | spring.cache.redis.cache-null-values=true<br>~~考慮優化緩存穿透 hash 或 boolen filter<br>考慮 優化 將 redis 做主從設計<br>~~ |
 | 多資料庫一致性問題 | 引入 Spring Jta Atomikos 做 Transaction Managment |
+|    |    |
+| 打包路徑結構改變問題 |  使用 Maven 打包後會使結構路徑產生變化，<br>造成讀取不到靜態檔案預設位置，<br>application 設定檔案加上，<br>spring.thymeleaf.prefix=classpath:/templates。|
 
 <br>
 <br>
