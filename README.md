@@ -5,7 +5,7 @@
 
 ### Structure
 
-![](./images/SpringBootRBAC.png)
+![](./images/SpringBootRBAC1.png)
 
 <br>
 <br>
