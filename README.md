@@ -114,7 +114,7 @@ AllStart.sh
 
 ## Best Further
 
-### 提高 QPS 跟 Concurrency 能力 ?
+### 提高 QPS 與 Concurrency 能力
 1. 多實例應用做水平擴充
 2. nginx 做反向代理，負載均衡
 3. RabbitMQ 更換 Atomikos 實現最終一致性<br>
