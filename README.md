@@ -14,7 +14,7 @@
 
 ### Execute
 ```
-cd Springboot-RBAC-Security-Redis-jpa-Mysql-Docker    (Folder)
+cd Springboot-RBAC-Security-Redis-jpa-Mysql-Docker     (Folder)
 ```
 ```
 AllStart.sh
